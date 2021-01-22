@@ -30,11 +30,13 @@ exports.typeDefs = gql`
 
   type Query {
     getPosts: [Post]
+    getPost(postId: ID!): Post
   }
 
   type Mutation {
-    createPost(body: String, username: String): Post
+    createPost(body: String): Post
     register(registerInput: RegisterInput!): User
     login(username: String, password: String): User
+    deletePost(postId: ID!): String
   }
 `;

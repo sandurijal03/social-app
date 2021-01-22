@@ -5,6 +5,7 @@ const { resolvers, typeDefs } = require('./graphql');
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context: ({ req }) => ({ req }),
 });
 
 mongoose

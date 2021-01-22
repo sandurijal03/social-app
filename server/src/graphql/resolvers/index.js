@@ -8,6 +8,7 @@ const {
   validateRegisterInput,
   validateLoginInput,
 } = require('../../utils/validators');
+const checkAuth = require('../../utils/check-auth');
 
 function generateToken(user) {
   return jwt.sign(
@@ -26,18 +27,51 @@ function generateToken(user) {
 exports.resolvers = {
   Query: {
     getPosts: async (parent, args, ctx, info) => {
-      const posts = await Post.find();
+      const posts = await Post.find().sort({ createdAt: -1 });
       return posts;
+    },
+    getPost: async (parent, { postId }, ctx, info) => {
+      try {
+        const post = await Post.findById(postId);
+        if (post) {
+          return post;
+        } else {
+          throw new Error('Post not found');
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
     },
   },
 
   Mutation: {
-    createPost: async (parent, { body, username }, ctx, info) => {
-      const post = await new Post({
+    createPost: async (parent, { body }, ctx, info) => {
+      const user = checkAuth(ctx);
+
+      const newPost = new Post({
         body,
-        username,
-      }).save();
+        user: user.id,
+        username: user.username,
+      });
+
+      const post = await newPost.save();
+
       return post;
+    },
+    deletePost: async (parent, { postId }, ctx, info) => {
+      const user = checkAuth(ctx);
+
+      try {
+        const post = await Post.findById(postId);
+        if (user.username === post.username) {
+          await post.delete();
+          return 'Post deleted  Successfully';
+        } else {
+          throw new AuthenticationError('action not allowed');
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
     },
 
     login: async (parent, { username, password }, ctx, info) => {
