@@ -1,5 +1,4 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import ApolloProvider from './ApolloProvider';
 
-ReactDOM.render(<App />, document.querySelector('#root'));
+ReactDOM.render(ApolloProvider, document.querySelector('#root'));
