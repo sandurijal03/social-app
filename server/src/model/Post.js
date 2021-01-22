@@ -22,6 +22,12 @@ const postSchema = new Schema(
         },
       },
     ],
+    likes: [
+      {
+        username: String,
+        createdAt: String,
+      },
+    ],
     user: {
       type: ObjectId,
       ref: 'User',
