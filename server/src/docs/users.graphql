@@ -1,0 +1,37 @@
+mutation REGISTER(
+  $email: String
+  $username: String
+  $password: String
+  $confirmPassword: String
+) {
+  register(
+    registerInput: {
+      email: $email
+      username: $username
+      password: $password
+      confirmPassword: $confirmPassword
+    }   
+  ) {
+    _id
+    email
+    token
+    createdAt
+    username
+  }
+}
+
+mutation LOGIN(
+  $username: String
+  $password: String
+) {
+  login(
+      username: $username
+      password: $password
+  ) {
+    _id
+    email
+    token
+    createdAt
+    username
+  }
+}

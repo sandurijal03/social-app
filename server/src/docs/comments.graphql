@@ -1,0 +1,33 @@
+mutation CREATE_COMMENT($postId: ID!, $body: String) {
+  createComment(postId: $postId, body: $body) {
+    _id
+    body
+    username
+    createdAt
+    comments {
+      body
+    }
+    likes {
+      username
+    }
+    likeCount
+    commentCount
+  }
+}
+
+mutation DELETE_COMMENT($postId:ID!, $commentId:ID!){
+   deleteComment(postId: $commentId, commendId:$postId) {
+    _id
+    body
+    username
+    createdAt
+    comments {
+      body
+    }
+    likes {
+      username
+    }
+    likeCount
+    commentCount
+  }
+}

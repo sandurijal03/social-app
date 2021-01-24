@@ -1,0 +1,70 @@
+mutation CREATE_POST($body: String) {
+  createPost(body: $body) {
+    _id
+    body
+    username
+    createdAt
+    comments {
+      body
+    }
+    likes {
+      username
+    }
+    likeCount
+    commentCount
+  }
+}
+
+mutation DELETE_POST($postId: ID!) {
+  deletePost(postId: $postId)
+}
+
+mutation LIKE_POST($postId: ID!) {
+  likePost(postId: $postId) {
+    _id
+    body
+    likeCount
+  }
+}
+
+query GET_POSTS {
+  getPosts {
+    _id
+    body
+    username
+    createdAt
+    likes {
+      id
+      username
+    }
+    likeCount
+  }
+}
+
+query GET_POSTS {
+  getPosts {
+    _id
+    body
+    username
+    createdAt
+    likes {
+      id
+      username
+    }
+    likeCount
+  }
+}
+
+query GET_POST($postId: ID!) {
+  getPost(postId: $postId) {
+    _id
+    body
+    username
+    createdAt
+    likes {
+      id
+      username
+    }
+    likeCount
+  }
+}
